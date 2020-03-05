@@ -2,8 +2,12 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
 .vscode/*
-pyenv/*
+
+carvenv/*
+.DS_STORE
+carros_training.csv
 
 # C extensions
 *.so
