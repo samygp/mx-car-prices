@@ -5,6 +5,8 @@ __pycache__/
 
 .vscode/*
 
+Untitled*
+carros_preprocessed*
 carvenv/*
 .DS_STORE
 carros_training.csv
