@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<style>
+
+    .botoncito {
+        background-color:cornflowerblue;
+        padding: 1em;
+        color: white;
+        display: inline-block;
+        border-radius: 13%;
+        cursor:pointer;
+        
+    }
+</style>
+<script>
+    var coches = {"chevrolet": ["aveo", "beat", "captiva sport", "cavalier", "chevy", "cruze", "equinox", "malibu", "sonic", "spark", "suburban", "traverse", "trax"], "ford": ["ecosport", "edge", "escape", "expedition", "explorer", "f-150", "fiesta hatchback", "fiesta sedan", "figo hatchback", "figo sedan", "focus", "focus hatchback", "fusion", "lobo", "mustang", "ranger"], "honda": ["accord", "city", "civic", "cr-v", "fit", "hr-v", "odyssey", "pilot"], "mazda": ["3 hatchback", "3 sedan", "6", "cx-5", "cx-9"], "nissan": ["altima", "kicks", "march", "np300", "pathfinder", "sentra", "tiida sedan", "versa", "x-trail"], "volkswagen": ["beetle", "bora", "clasico", "gol", "golf", "jetta", "passat", "polo", "polo hatchback", "tiguan", "up!", "vento"]};
+
+    function addElem(selectObj, val, txt){
+        let opt = document.createElement("option");
+        opt.value = val;
+        opt.text = txt;
+        selectObj.add(opt);
+    }
+
+    function titulizar(cadenita){
+        var pedacitos = cadenita.split(' ');
+        return pedacitos.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ');
+    }
+
+    function updateModelos(){
+        let ms = document.getElementById("marca");
+        let marca = ms.options[ms.selectedIndex].value;
+        let modeloSelect = document.getElementById("modelo");
+        for(var mod in modeloSelect){
+            modeloSelect.options.remove(0);
+        }
+        addElem(modeloSelect, "", "-- Selecciona --");
+        if(marca != ""){
+            coches[marca].forEach( m => addElem(modeloSelect, m, titulizar(m)));
+        }
+    }
+
+    function predecir(){
+        let marcaSelect = document.getElementById("marca");
+        let marca = marcaSelect.options[marcaSelect.selectedIndex].value;
+
+        let modeloSelect = document.getElementById("modelo");
+        let modelo = modeloSelect.options[modeloSelect.selectedIndex].value;
+
+        let anioSelect = document.getElementById("anio");
+        let anio = anioSelect.options[anioSelect.selectedIndex].value;
+
+        let km = document.getElementById("km").value;
+        
+        let url='http://localhost:54345/predict?anio=' + anio + '&km='+km+'&marca='+marca+'&modelo='+modelo;
+
+        alert(url);
+        /*let Http = new XMLHttpRequest();
+        Http.open("GET", url);
+        Http.send();
+
+        Http.onreadystatechange = (e) => {
+            alert(Http.responseText)
+        }*/
+    }
+</script>
+<html>
+    <body>
+        <title>¿De a cómo su carro joven?</title>
+        <h2>¿De a cómo su carro joven?</h1>
+        <div id="valores">
+            <label for="marca">Marca:&nbsp;</label>
+            <select id="marca" onchange="updateModelos()">
+                <option value="">-- Selecciona --</option>
+            </select>
+            
+            <label for="modelo">Modelo:&nbsp;</label>
+            <select id="modelo">
+                <option value="">-- Selecciona --</option>
+            </select>
+            
+            <label for="anio">Anio:&nbsp;</label>
+            <select id="anio"></select>
+
+            <label for="km">Kilometraje:&nbsp;</label>
+            <input type="text" id="km"/>
+        </div>
+
+        <br/>
+        <div id="boton" class="botoncito" onclick="predecir()">Predecir</div>
+        <br/>
+
+        <h3 id="precio"></h3>
+
+    </body>
+</html>
+<script>
+    let anioSelect = document.getElementById("anio");
+    for(let i=2001; i<2020; i++){
+        addElem(anioSelect, i, i.toString());
+    }
+
+    let marcaSelect = document.getElementById("marca");
+    for(let marca in coches){
+        addElem(marcaSelect, marca, titulizar(marca));
+    }
+    
+</script>
