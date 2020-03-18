@@ -4,7 +4,7 @@ from scipy.optimize import nnls
 from sklearn import linear_model
 from sklearn.model_selection import train_test_split
 
-df_original = pd.read_csv("./carros_preprocessed.csv", index_col=0).reset_index(drop=True)
+df_original = pd.read_csv("../data/carros_preprocessed.csv", index_col=0).reset_index(drop=True)
 
 best_fit = 0
 

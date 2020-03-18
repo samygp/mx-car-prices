@@ -25,7 +25,10 @@ class ModeloCarros():
     def predecir(self, marca_modelo, anio, km):
         row = self.get_row(marca_modelo, anio, km)
         print(row)
-        return int(self.modelo.predict(row)[0])
+        result = int(self.modelo.predict(row)[0])
+        if result < 0:
+            return f"El resultado encontrado ({result}) no tiene mucho sentido, probablemente no había suficiente información de entrenamiento para los valores solicitados. Prueba con un modelo de anio mas reciente"
+        return result
 
 """
 m = modelazo.ModeloCarros()

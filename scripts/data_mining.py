@@ -52,4 +52,4 @@ for i in range(0,19,2):
 
 df = pd.DataFrame(listing)
 print(df.head())
-df.to_csv('carros.csv')
+df.to_csv('../data/carros_raw.csv')
